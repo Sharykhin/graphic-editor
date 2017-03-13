@@ -32,6 +32,8 @@ class DI
             foreach ($settersInjection as $interface) {
                 switch ($interface) {
                     case ShapeFactoryAwareInterface::class:
+                        // I don't use some kind of array_shift or reset since they work with reference that may affect
+                        // bad memory usage since php works in COW way
                         $reflectionMethod = ((new ReflectionClass($interface))->getMethods())[0];
                         $instance = new self::$map[ShapeFactoryInterface::class];
                         call_user_func_array([$class, $reflectionMethod->getName()], [$instance]);

@@ -10,5 +10,8 @@ use Graphic\Interfaces\Services\ShapeFactoryInterface;
  */
 interface ShapeFactoryAwareInterface
 {
-    public function setShapeFactory(ShapeFactoryInterface $shapeFactory);
+    /**
+     * @param ShapeFactoryInterface $shapeFactory
+     */
+    public function setShapeFactory(ShapeFactoryInterface $shapeFactory) : void;
 }

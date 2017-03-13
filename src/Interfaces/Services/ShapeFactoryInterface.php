@@ -10,5 +10,10 @@ use Graphic\Interfaces\Shapes\ShapeInterface;
  */
 interface ShapeFactoryInterface
 {
+    /**
+     * @param string $type
+     * @param array $params
+     * @return ShapeInterface
+     */
     public function getShape(string $type, array $params) : ShapeInterface;
 }

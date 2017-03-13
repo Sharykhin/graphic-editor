@@ -6,26 +6,45 @@ use Graphic\Interfaces\Calculators\CalculatorInterface;
 use Graphic\Interfaces\Services\ShapeFactoryInterface;
 use Graphic\Interfaces\ShapeFactoryAwareInterface;
 
+/**
+ * Class ShapeCalculator
+ * @package Graphic\Calculators
+ */
 class ShapeCalculator implements CalculatorInterface, ShapeFactoryAwareInterface
 {
-    protected $shapes;
+    /** @var array $shapes */
+    protected $shapes = [];
 
+    /** @var ShapeFactoryInterface $shapeFactory */
     protected $shapeFactory;
 
+    /**
+     * ShapeCalculator constructor.
+     * @param array $shapes
+     */
     public function __construct(array $shapes)
     {
         $this->shapes = $shapes;
     }
 
+    /**
+     * @return array
+     */
     public function calculate()
     {
+        $totalArea = [];
+        foreach ($this->shapes as $shape) {
+            $shapeInstance = $this->shapeFactory->getShape($shape['type'], $shape['params']);
+            $totalArea[] = $shapeInstance->calculateArea();
+        }
 
+        return $totalArea;
     }
 
     /**
      * @param ShapeFactoryInterface $shapeFactory
      */
-    public function setShapeFactory(ShapeFactoryInterface $shapeFactory)
+    public function setShapeFactory(ShapeFactoryInterface $shapeFactory) : void
     {
         $this->shapeFactory = $shapeFactory;
     }
