@@ -3,7 +3,14 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Graphic\Shapes\Circle;
+use Graphic\Services\DI;
+use Graphic\Calculators\ShapeCalculator;
 
+$shapes = [
+    ['type' => 'circle', 'params' => []],
+   ['type' => 'circle', 'params' => []]
+];
 $circle = new Circle(2);
 
-echo $circle->calculateArea() . PHP_EOL;
+$calculator = DI::resolveObject(new ShapeCalculator($shapes));
+var_dump($calculator);
