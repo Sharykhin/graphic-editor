@@ -42,6 +42,8 @@ class ShapeCalculator implements CalculatorInterface, ShapeFactoryAwareInterface
     }
 
     /**
+     * We could use some kind of a static factory easily.
+     * But I made up my mind to make a decision to use some sort of setter injection
      * @param ShapeFactoryInterface $shapeFactory
      */
     public function setShapeFactory(ShapeFactoryInterface $shapeFactory)

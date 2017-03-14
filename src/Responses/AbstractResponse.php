@@ -22,5 +22,5 @@ abstract class AbstractResponse
         $this->calculator = $calculator;
     }
 
-    abstract function output();
+    abstract public function output();
 }

@@ -32,7 +32,6 @@ $shapes = [
         ]
     ]
 ];
-$circle = new Circle(2);
 
 $calculator = DI::resolveSetters(new ShapeCalculator($shapes));
 
