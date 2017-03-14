@@ -9,8 +9,28 @@ use Graphic\Responses\ArrayResponse;
 use Graphic\Responses\FileResponse;
 
 $shapes = [
-    ['type' => 'circle', 'params' => []],
-    ['type' => 'circle', 'params' => []]
+    [
+        'type' => 'circle',
+        'params' => [
+            'radius' => 3,
+            'color' => 'red',
+            'border-size' => 2
+        ]
+    ],
+    [
+        'type' => 'circle',
+        'params' => [
+            'radius' => 5,
+            'border-size'=> 4
+        ]
+    ],
+    [
+        'type' => 'square',
+        'params' => [
+            'length' => 5,
+            'color'=> 'blue'
+        ]
+    ]
 ];
 $circle = new Circle(2);
 

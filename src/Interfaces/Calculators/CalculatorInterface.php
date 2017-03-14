@@ -12,5 +12,5 @@ interface CalculatorInterface
      * Calculate area of all the shapes
      * @return mixed
      */
-    public function calculate();
+    public function calculate() : array;
 }

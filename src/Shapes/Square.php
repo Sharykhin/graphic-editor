@@ -28,6 +28,7 @@ class Square implements ShapeInterface
      */
     public function calculateArea()
     {
+        echo "calculate square area\n";
         return $this->length * 2;
     }
 }

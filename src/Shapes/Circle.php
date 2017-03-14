@@ -28,6 +28,7 @@ class Circle implements ShapeInterface
      */
     public function calculateArea()
     {
+        echo "calculate circle area\n";
         return M_PI * pow($this->radius, 2);
     }
 }

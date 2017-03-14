@@ -2,6 +2,8 @@
 
 namespace Graphic\Services;
 
+use Graphic\Attributes\BorderSizeAttribute;
+use Graphic\Attributes\ColorAttribute;
 use Graphic\Exceptions\UnsupportedShapeTypeException;
 use Graphic\Interfaces\Services\ShapeFactoryInterface;
 use Graphic\Interfaces\Shapes\ShapeInterface;
@@ -24,11 +26,30 @@ class ShapeFactory implements ShapeFactoryInterface
 
         switch ($type) {
             case 'circle':
-                return new Circle(12);
+                $instance = new Circle($params['radius']);
+                unset($params['radius']);
+                break;
             case 'square':
-                return new Square(2);
+                $instance = new Square($params['length']);
+                unset($params['length']);
+                break;
+            default:
+                throw new UnsupportedShapeTypeException($type, "<{$type}> is not supported shape type");
         }
 
-        throw new UnsupportedShapeTypeException($type);
+        foreach ($params as $name => $value) {
+            switch ($name) {
+                case 'color':
+                    $instance = new ColorAttribute($instance);
+                    $instance->setColor($value);
+                    break;
+                case 'border-size':
+                    $instance = new BorderSizeAttribute($instance);
+                    $instance->setBorder($value);
+                    break;
+            }
+        }
+
+        return $instance;
     }
 }

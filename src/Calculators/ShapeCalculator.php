@@ -30,7 +30,7 @@ class ShapeCalculator implements CalculatorInterface, ShapeFactoryAwareInterface
     /**
      * @return array
      */
-    public function calculate()
+    public function calculate() : array
     {
         $totalArea = [];
         foreach ($this->shapes as $shape) {

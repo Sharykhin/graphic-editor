@@ -14,7 +14,6 @@ class ArrayResponse extends AbstractResponse
     public function output()
     {
         $array = $this->calculator->calculate();
-
-        echo 'make output as array points: [' . implode(',', $array) . ']';
+        echo "\033[33mmake output as array points: [" . implode(",", $array) . "]\033[0m\n";
     }
 }

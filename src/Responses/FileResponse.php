@@ -13,8 +13,7 @@ class FileResponse extends AbstractResponse
      */
     public function output()
     {
-        $areaCalculation = $this->calculator->calculate();
-
-        echo "file output";
+        $array = $this->calculator->calculate();
+        echo "\033[33mconvert array result: [" . implode(",", $array) . "] into a file representation\033[0m\n";
     }
 }
