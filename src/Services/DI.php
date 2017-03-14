@@ -5,6 +5,7 @@ namespace Graphic\Services;
 use Graphic\Interfaces\Services\ShapeFactoryInterface;
 use Graphic\Interfaces\ShapeFactoryAwareInterface;
 use ReflectionClass;
+use ReflectionMethod;
 
 /**
  * Class DI
@@ -24,23 +25,50 @@ class DI
      * @param $class
      * @return mixed
      */
-    public static function resolveObject($class)
+    public static function resolveSetters($class)
     {
         $reflectionClass = new ReflectionClass($class);
         $settersInjection = array_intersect(self::$setters, array_keys($reflectionClass->getInterfaces()));
         if (!empty($settersInjection)) {
             foreach ($settersInjection as $interface) {
-                switch ($interface) {
-                    case ShapeFactoryAwareInterface::class:
-                        // I don't use some kind of array_shift or reset since they work with reference that may affect
-                        // bad memory usage since php works in COW way
-                        $reflectionMethod = ((new ReflectionClass($interface))->getMethods())[0];
-                        $instance = new self::$map[ShapeFactoryInterface::class];
-                        call_user_func_array([$class, $reflectionMethod->getName()], [$instance]);
-                        break;
+                $setterMethod = (new ReflectionClass($interface))->getMethods(ReflectionMethod::IS_PUBLIC)[0];
+                $paramClass = $setterMethod->getParameters()[0]->getClass();
+                if ($paramClass->isInterface() && array_key_exists($paramClass->getName(), self::$map)) {
+                    $instance = self::make(self::$map[$paramClass->getName()]);
+                } else {
+                    $instance = self::make($paramClass->getName());
                 }
+                call_user_func_array([$class, $setterMethod->getName()], [$instance]);
             }
         }
+
         return $class;
+    }
+
+    /**
+     * @param $class
+     * @return object
+     */
+    public static function make($class)
+    {
+        $reflectionClass = new ReflectionClass($class);
+        $args = [];
+        $constructor = $reflectionClass->getConstructor();
+        if ($constructor instanceof ReflectionMethod) {
+            $constructorParams = $constructor->getParameters();
+            foreach ($constructorParams as $reflectionParameter) {
+                if ($reflectionParameter->getClass() instanceof ReflectionClass) {
+                    if (($reflectionParameter->getClass())->isInterface() && array_key_exists(($reflectionParameter->getClass())->getName(), self::$map)) {
+                        $instance = self::make(self::$map[($reflectionParameter->getClass())->getName()]);
+                    } else {
+                        $instance = self::make(($reflectionParameter->getClass())->getName());
+                    }
+                    $args[] = $instance;
+                }
+            }
+            return $reflectionClass->newInstanceArgs($args);
+        } else {
+            return $reflectionClass->newInstanceWithoutConstructor();
+        }
     }
 }

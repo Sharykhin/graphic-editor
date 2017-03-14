@@ -13,5 +13,5 @@ interface ShapeFactoryAwareInterface
     /**
      * @param ShapeFactoryInterface $shapeFactory
      */
-    public function setShapeFactory(ShapeFactoryInterface $shapeFactory) : void;
+    public function setShapeFactory(ShapeFactoryInterface $shapeFactory);
 }

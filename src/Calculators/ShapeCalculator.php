@@ -44,9 +44,8 @@ class ShapeCalculator implements CalculatorInterface, ShapeFactoryAwareInterface
     /**
      * @param ShapeFactoryInterface $shapeFactory
      */
-    public function setShapeFactory(ShapeFactoryInterface $shapeFactory) : void
+    public function setShapeFactory(ShapeFactoryInterface $shapeFactory)
     {
         $this->shapeFactory = $shapeFactory;
     }
-
 }

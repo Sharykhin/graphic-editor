@@ -8,9 +8,9 @@ use Graphic\Calculators\ShapeCalculator;
 
 $shapes = [
     ['type' => 'circle', 'params' => []],
-   ['type' => 'circle', 'params' => []]
+    ['type' => 'circle', 'params' => []]
 ];
 $circle = new Circle(2);
 
-$calculator = DI::resolveObject(new ShapeCalculator($shapes));
+$calculator = DI::resolveSetters(new ShapeCalculator($shapes));
 var_dump($calculator);
