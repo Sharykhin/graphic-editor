@@ -33,8 +33,6 @@ $shapes = [
     ]
 ];
 
-$calculator = DI::resolveSetters(new ShapeCalculator($shapes));
-
 $longOpts  = array(
     "output:",
     "help"
@@ -50,6 +48,7 @@ if (!isset($cliOptions['output']) ||
     exit;
 }
 
+$calculator = DI::resolveSetters(new ShapeCalculator($shapes));
 $response = null;
 
 switch ($cliOptions['output']) {
